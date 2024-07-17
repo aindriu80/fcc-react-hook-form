@@ -1,10 +1,10 @@
-import Users from './users/components/Users';
+import { UsersProvider } from './users/components/UsersProvider';
 
 function App() {
   return (
     <div className="App">
       <h1>React Hook Form with Zod</h1>
-      <Users />
+      <UsersProvider />
     </div>
   );
 }
