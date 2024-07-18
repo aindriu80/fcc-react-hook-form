@@ -8,6 +8,7 @@ const Users = () => {
     register,
     formState: { errors },
   } = useFormContext<Schema>();
+
   return (
     <Stack sx={{ gap: 2 }}>
       <TextField
@@ -22,7 +23,14 @@ const Users = () => {
         error={!!errors.email}
         helperText={errors.email?.message}
       />
-      <RHFAutocomplete name="states" />
+      <RHFAutocomplete<Schema>
+        name="states"
+        label="States"
+        options={[
+          { id: '1', label: 'California' },
+          { id: '2', label: 'Texas' },
+        ]}
+      />
     </Stack>
   );
 };
