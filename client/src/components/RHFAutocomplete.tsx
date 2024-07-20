@@ -7,7 +7,7 @@ import { Option } from '../types/option';
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
-  options: Option[];
+  options?: Option[];
   label: string;
 };
 
@@ -24,12 +24,12 @@ export function RHFAutocomplete<T extends FieldValues>({
       name={name}
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <Autocomplete
-          options={options}
+          options={options || []}
           value={value.map((id: string) =>
-            options.find((item) => item.id === id),
+            options?.find((item) => item.id === id),
           )}
           getOptionLabel={(option) =>
-            options.find((item) => item.id === option.id)?.label ?? ''
+            options?.find((item) => item.id === option.id)?.label ?? ''
           }
           onChange={(_, newValue) => {
             onChange(newValue.map((item) => item.id));
