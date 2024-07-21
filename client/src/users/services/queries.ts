@@ -17,7 +17,7 @@ export function useLanguages() {
     queryKey: ['languages'],
     queryFn: () =>
       axios
-        .get<Option[]>('http://localhost:8080/languges')
+        .get<Option[]>('http://localhost:8080/languages')
         .then((res) => res.data),
   });
 }

@@ -2,11 +2,13 @@ import { Stack, TextField } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
-import { useStates } from '../services/queries';
+import { RHFToggleButtonGroup } from '../../components/RHFToggleButton';
+import { useLanguages, useStates } from '../services/queries';
 import { Schema } from '../utils/schema';
 
 const Users = () => {
   const statesQuery = useStates();
+  const languagesQuery = useLanguages();
 
   const {
     register,
@@ -42,6 +44,10 @@ const Users = () => {
         name="states"
         label="States"
         options={statesQuery.data}
+      />
+      <RHFToggleButtonGroup<Schema>
+        name="languagesSpoken"
+        options={languagesQuery.data}
       />
     </Stack>
   );
