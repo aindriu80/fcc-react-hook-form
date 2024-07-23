@@ -2,15 +2,22 @@ import { Stack, TextField } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
+import { RHFCheckboxGroup } from '../../components/RHFCheckboxGroup';
 import { RHFRadioGroup } from '../../components/RHFRadioGroup';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
-import { useGenders, useLanguages, useStates } from '../services/queries';
+import {
+  useGenders,
+  useLanguages,
+  useSkills,
+  useStates,
+} from '../services/queries';
 import { Schema } from '../utils/schema';
 
 const Users = () => {
   const statesQuery = useStates();
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
+  const skillsQuery = useSkills();
 
   const {
     register,
@@ -55,6 +62,11 @@ const Users = () => {
         name="gender"
         options={gendersQuery.data}
         label="Gender"
+      />
+      <RHFCheckboxGroup<Schema>
+        name="skills"
+        options={skillsQuery.data}
+        label="Skills"
       />
     </Stack>
   );
