@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
 import { RHFCheckboxGroup } from '../../components/RHFCheckboxGroup';
+import { RHFDateTimePicker } from '../../components/RHFDateTimePicker';
 import { RHFRadioGroup } from '../../components/RHFRadioGroup';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
 import {
@@ -67,6 +68,10 @@ const Users = () => {
         name="skills"
         options={skillsQuery.data}
         label="Skills"
+      />
+      <RHFDateTimePicker<Schema>
+        name="registrationDateAndTime"
+        label="registration Date & Time"
       />
     </Stack>
   );
