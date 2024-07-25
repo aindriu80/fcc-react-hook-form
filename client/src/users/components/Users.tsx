@@ -1,8 +1,9 @@
-import { Stack, TextField } from '@mui/material';
+import { Stack, TextField, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
 import { RHFCheckboxGroup } from '../../components/RHFCheckboxGroup';
+import { RHFDateRangePicker } from '../../components/RHFDateRangePicker';
 import { RHFDateTimePicker } from '../../components/RHFDateTimePicker';
 import { RHFRadioGroup } from '../../components/RHFRadioGroup';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
@@ -73,6 +74,8 @@ const Users = () => {
         name="registrationDateAndTime"
         label="registration Date & Time"
       />
+      <Typography>Former Employment Period:</Typography>
+      <RHFDateRangePicker<Schema> name="formerEmploymentPeriod" label="label" />
     </Stack>
   );
 };
