@@ -7,6 +7,7 @@ import { RHFDateRangePicker } from '../../components/RHFDateRangePicker';
 import { RHFDateTimePicker } from '../../components/RHFDateTimePicker';
 import { RHFRadioGroup } from '../../components/RHFRadioGroup';
 import { RHFSlider } from '../../components/RHFSlider';
+import { RHFSwitch } from '../../components/RHFSwitch';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
 import {
   useGenders,
@@ -78,6 +79,7 @@ const Users = () => {
       <Typography>Former Employment Period:</Typography>
       <RHFDateRangePicker<Schema> name="formerEmploymentPeriod" label="label" />
       <RHFSlider<Schema> name="salaryRange" label="Salary Range" />
+      <RHFSwitch<Schema> name="isTeacher" label="Are you a teacher?" />
     </Stack>
   );
 };
