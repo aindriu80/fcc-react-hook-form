@@ -8,6 +8,7 @@ import { RHFDateTimePicker } from '../../components/RHFDateTimePicker';
 import { RHFRadioGroup } from '../../components/RHFRadioGroup';
 import { RHFSlider } from '../../components/RHFSlider';
 import { RHFSwitch } from '../../components/RHFSwitch';
+import { RHFTextField } from '../../components/RHFTextField';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
 import {
   useGenders,
@@ -23,11 +24,7 @@ const Users = () => {
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
 
-  const {
-    register,
-    formState: { errors },
-    watch,
-  } = useFormContext<Schema>();
+  const { watch } = useFormContext<Schema>();
 
   watch('states');
 
@@ -41,18 +38,8 @@ const Users = () => {
 
   return (
     <Stack sx={{ gap: 2 }}>
-      <TextField
-        {...register('name')}
-        label="Name"
-        error={!!errors.name}
-        helperText={errors.name?.message}
-      />
-      <TextField
-        {...register('email')}
-        label="Email"
-        error={!!errors.email}
-        helperText={errors.email?.message}
-      />
+      <RHFTextField<Schema> name="name" label="Name" />
+      <RHFTextField<Schema> name="email" label="Email" />
       <RHFAutocomplete<Schema>
         name="states"
         label="States"
