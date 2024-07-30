@@ -1,6 +1,6 @@
-import { Stack, TextField, Typography } from '@mui/material';
-import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Button, Stack, TextField, Typography } from '@mui/material';
+import { Fragment, useEffect } from 'react';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
 import { RHFCheckboxGroup } from '../../components/RHFCheckboxGroup';
 import { RHFDateRangePicker } from '../../components/RHFDateRangePicker';
@@ -24,7 +24,13 @@ const Users = () => {
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
 
-  const { watch } = useFormContext<Schema>();
+  const {
+    register,
+    formState: { errors },
+    watch,
+    control,
+    unregister,
+  } = useFormContext<Schema>();
 
   watch('states');
 
@@ -35,6 +41,20 @@ const Users = () => {
 
     return () => sub.unsubscribe();
   }, [watch]);
+
+  const isTeacher = useWatch({ control, name: 'isTeacher' });
+
+  const { append, fields, remove, replace } = useFieldArray({
+    control,
+    name: 'students',
+  });
+
+  useEffect(() => {
+    if (!isTeacher) {
+      replace([]);
+      unregister('students');
+    }
+  }, [isTeacher, replace, unregister]);
 
   return (
     <Stack sx={{ gap: 2 }}>
@@ -67,6 +87,21 @@ const Users = () => {
       <RHFDateRangePicker<Schema> name="formerEmploymentPeriod" label="label" />
       <RHFSlider<Schema> name="salaryRange" label="Salary Range" />
       <RHFSwitch<Schema> name="isTeacher" label="Are you a teacher?" />
+
+      {isTeacher && (
+        <Button onClick={() => append({ name: '' })} type="button">
+          Add new student
+        </Button>
+      )}
+
+      {fields.map((field, index) => (
+        <Fragment key={field.id}>
+          <RHFTextField name={`students.${index}.name`} label="Name" />
+          <Button color="error" onClick={() => remove(index)} type="button">
+            Remove
+          </Button>
+        </Fragment>
+      ))}
     </Stack>
   );
 };
