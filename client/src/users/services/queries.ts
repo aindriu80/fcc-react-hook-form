@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Option } from '../../types/option';
+import { ApiGet } from '../types/apiTypes';
 
 export function useStates() {
   return useQuery({
@@ -39,5 +40,21 @@ export function useSkills() {
       axios
         .get<Option[]>('http://localhost:8080/skills')
         .then((res) => res.data),
+  });
+}
+
+export function useUsers() {
+  return useQuery({
+    queryKey: ['users'],
+    queryFn: (): Promise<Option[]> =>
+      axios.get<ApiGet[]>('http://localhost:8080/users').then((response) =>
+        response.data.map(
+          (user) =>
+            ({
+              id: user.id,
+              label: user.name,
+            }) satisfies Option,
+        ),
+      ),
   });
 }

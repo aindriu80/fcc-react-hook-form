@@ -1,4 +1,4 @@
-import { Button, Container, Stack, TextField, Typography } from '@mui/material';
+import { Button, Container, List, ListItem, ListItemButton, ListSubheader, Stack, TextField, Typography } from '@mui/material';
 import { Fragment, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
@@ -14,15 +14,17 @@ import {
   useGenders,
   useLanguages,
   useSkills,
-  useStates,
+  useStates
+  useUsers,
 } from '../services/queries';
-import { Schema, defaultValues } from '../utils/schema';
+import { Schema, defaultValues } from '../types/schema';
 
 const Users = () => {
   const statesQuery = useStates();
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
+  const usersQuery = useUsers()
 
   const {
     register,
@@ -34,6 +36,10 @@ const Users = () => {
   } = useFormContext<Schema>();
 
   watch('states');
+
+  const id = useWatch({control,name:'id'})
+
+  const userQuery(id)
 
   useEffect(() => {
     const sub = watch((value) => {
@@ -61,8 +67,19 @@ const Users = () => {
     reset(defaultValues);
   };
 
+
   return (
     <Container maxWidth="sm" component="form">
+
+  <List subheader={<ListSubheader>Users</ListSubheader>}>
+      {usersQuery.data?.map((user)=>(
+      <ListItem disablePadding key={user.id}>
+            <ListItemButton onClick={()=> handleUserClick(user.id)}></ListItemButton>
+            </ListItem>
+      ))}
+
+    </List>
+
       <Stack sx={{ gap: 2 }}>
         <RHFTextField<Schema> name="name" label="Name" />
         <RHFTextField<Schema> name="email" label="Email" />

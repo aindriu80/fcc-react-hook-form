@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
-import { defaultValues, schema, Schema } from '../utils/schema';
+import { defaultValues, schema, Schema } from '../types/schema';
 import Users from './Users';
 import { DevTool } from '@hookform/devtools';
 
