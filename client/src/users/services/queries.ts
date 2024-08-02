@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Option } from '../../types/option';
 import { ApiGet } from '../types/apiTypes';
+import { Schema } from '../types/schema';
 
 export function useStates() {
   return useQuery({
@@ -48,13 +49,41 @@ export function useUsers() {
     queryKey: ['users'],
     queryFn: (): Promise<Option[]> =>
       axios.get<ApiGet[]>('http://localhost:8080/users').then((response) =>
-        response.data.map(
-          (user) =>
-            ({
-              id: user.id,
-              label: user.name,
-            }) satisfies Option,
-        ),
+        response.data.map((user) => ({
+          id: user.id,
+          label: user.name,
+        })),
       ),
+  });
+}
+
+export function useUser(id: string) {
+  return useQuery({
+    queryKey: ['user', { id }],
+    queryFn: async (): Promise<Schema> => {
+      const { data } = await axios.get<ApiGet>(
+        `http://localhost:8080/users/${id}`,
+      );
+
+      return {
+        variant: 'edit',
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        formerEmploymentPeriod: [
+          new Date(data.formerEmploymentPeriod[0]),
+          new Date(data.formerEmploymentPeriod[1]),
+        ],
+        gender: data.gender,
+        languagesSpoken: data.languageSpoken,
+        registrationDateAndTime: new Date(data.registrationDatAndTime),
+        salaryRange: [data.salaryRange[0], data.salaryRange[1]],
+        skills: data.skills,
+        states: data.states,
+        students: data.students,
+        isTeacher: data.isTeacher,
+      };
+    },
+    enabled: !!id,
   });
 }
