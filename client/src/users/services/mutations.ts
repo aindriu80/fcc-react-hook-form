@@ -12,8 +12,18 @@ export function useCreateUser() {
 
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['  '],
+        queryKey: ['users'],
       });
+    },
+  });
+}
+
+export function useEditUser() {
+  return useMutation({
+    mutationFn: async (data: Schema) => {
+      if (data.variant === 'edit') {
+        await axios.put(`http://localhost:8080/users/${data.id}`, {});
+      }
     },
   });
 }

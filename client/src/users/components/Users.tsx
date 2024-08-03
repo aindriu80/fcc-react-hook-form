@@ -11,7 +11,12 @@ import {
   Typography,
 } from '@mui/material';
 import { Fragment, useEffect } from 'react';
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import {
+  SubmitHandler,
+  useFieldArray,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
 import { RHFCheckboxGroup } from '../../components/RHFCheckboxGroup';
 import { RHFDateRangePicker } from '../../components/RHFDateRangePicker';
@@ -21,6 +26,7 @@ import { RHFSlider } from '../../components/RHFSlider';
 import { RHFSwitch } from '../../components/RHFSwitch';
 import { RHFTextField } from '../../components/RHFTextField';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
+import { useCreateUser } from '../services/mutations';
 import {
   useGenders,
   useLanguages,
@@ -38,7 +44,7 @@ const Users = () => {
   const skillsQuery = useSkills();
   const usersQuery = useUsers();
 
-  const { watch, control, unregister, reset, setValue } =
+  const { watch, control, unregister, reset, setValue, handleSubmit } =
     useFormContext<Schema>();
 
   watch('states');
@@ -46,6 +52,7 @@ const Users = () => {
   const id = useWatch({ control, name: 'id' });
 
   const userQuery = useUser(id);
+  const variant = useWatch({ control, name: 'variant' });
 
   useEffect(() => {
     const sub = watch((value) => {
@@ -83,8 +90,18 @@ const Users = () => {
     reset(defaultValues);
   };
 
+  const createUserMutation = useCreateUser();
+
+  const onSubmit: SubmitHandler<Schema> = (data) => {
+    if (variant === 'create') {
+      createUserMutation.mutate(data);
+    } else {
+      //edit users
+    }
+  };
+
   return (
-    <Container maxWidth="sm" component="form">
+    <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ flexDirection: 'row', gap: 2 }}>
         <List subheader={<ListSubheader>Users</ListSubheader>}>
           {usersQuery.data?.map((user) => (

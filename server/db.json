@@ -162,6 +162,50 @@
         }
       ],
       "id": 3
+    },
+    {
+      "name": " ",
+      "email": "aindriu@test.com",
+      "states": [
+        "1"
+      ],
+      "languagesSpoken": [],
+      "gender": "1",
+      "skills": [],
+      "registrationDateAndTime": "2024-08-03T15:10:50.517Z",
+      "formerEmploymentPeriod": [
+        "2024-08-03T15:10:50.517Z",
+        "2024-08-03T15:10:50.517Z"
+      ],
+      "salaryRange": [
+        0,
+        2000
+      ],
+      "isTeacher": false,
+      "variant": "create",
+      "id": 4
+    },
+    {
+      "name": " test",
+      "email": "aindriu@test.com",
+      "states": [
+        "1"
+      ],
+      "languagesSpoken": [],
+      "gender": "1",
+      "skills": [],
+      "registrationDateAndTime": "2024-08-03T15:10:50.517Z",
+      "formerEmploymentPeriod": [
+        "2024-08-03T15:10:50.517Z",
+        "2024-08-03T15:10:50.517Z"
+      ],
+      "salaryRange": [
+        0,
+        2000
+      ],
+      "isTeacher": false,
+      "variant": "create",
+      "id": 5
     }
   ]
 }
