@@ -7,7 +7,6 @@ import {
   ListItemText,
   ListSubheader,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import { Fragment, useEffect } from 'react';
@@ -26,7 +25,7 @@ import { RHFSlider } from '../../components/RHFSlider';
 import { RHFSwitch } from '../../components/RHFSwitch';
 import { RHFTextField } from '../../components/RHFTextField';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
-import { useCreateUser } from '../services/mutations';
+import { useCreateUser, useEditUser } from '../services/mutations';
 import {
   useGenders,
   useLanguages,
@@ -35,7 +34,7 @@ import {
   useUser,
   useUsers,
 } from '../services/queries';
-import { Schema, defaultValues } from '../types/schema';
+import { Schema, defaultValues, schema } from '../types/schema';
 
 const Users = () => {
   const statesQuery = useStates();
@@ -44,8 +43,15 @@ const Users = () => {
   const skillsQuery = useSkills();
   const usersQuery = useUsers();
 
-  const { watch, control, unregister, reset, setValue, handleSubmit } =
-    useFormContext<Schema>();
+  const {
+    watch,
+    control,
+    unregister,
+    reset,
+    setValue,
+    handleSubmit,
+    getValues,
+  } = useFormContext<Schema>();
 
   watch('states');
 
@@ -91,12 +97,13 @@ const Users = () => {
   };
 
   const createUserMutation = useCreateUser();
+  const editUserMutation = useEditUser();
 
   const onSubmit: SubmitHandler<Schema> = (data) => {
     if (variant === 'create') {
       createUserMutation.mutate(data);
     } else {
-      //edit users
+      editUserMutation.mutate(data);
     }
   };
 
@@ -165,7 +172,10 @@ const Users = () => {
             </Fragment>
           ))}
           <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button type="submit">New User</Button>
+            <Button type="contained">
+              {variant === 'create' ? 'New User' : 'Edit User'}{' '}
+            </Button>
+            <Button onClick={() => schema.parse(getValues())}>Parse</Button>
             <Button onClick={handleReset}>Reset</Button>
           </Stack>
         </Stack>
